@@ -50,7 +50,7 @@ export default function ProductsTable({
 
     const deleteProductHandler = async (productId: string) => {
         try {
-            const data: any = await axios.delete("http://localhost:3000/api/product",
+            const data: any = await axios.delete(process.env.NEXT_PUBLIC_API_URL + "/api/product",
                 {
                     data: {
                         categoryID: category._id,

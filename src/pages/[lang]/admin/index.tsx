@@ -18,7 +18,7 @@ export default function Admin(props: AdminProps) {
 export const getStaticProps: GetStaticProps = async ({params}) => {
     let categories = [];
     try {
-        const res = await fetch("http://localhost:3000/api/categories");
+        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/categories");
         const data = await res.json();
         categories = data?.data || [];
 
