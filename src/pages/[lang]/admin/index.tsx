@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {getAllIds} from "../../../lib/files";
 import AdminPanelContainer from "../../../containers/admin-panel";
@@ -10,25 +10,31 @@ type AdminProps = {
 };
 
 export default function Admin(props: AdminProps) {
+    const [categories, setCategories] = useState([]);
+    const fetchCategories = async () => {
+        try {
+            const res = await axios.get("/api/categories");
+
+            console.log("fetchCategories res", res?.data?.data);
+            setCategories(res?.data?.data || []);
+
+        } catch (e) {
+            console.log(e);
+            setCategories([]);
+        }
+    }
+    useEffect(() => {
+        fetchCategories();
+    }, []);
     return (
-        <AdminPanelContainer {...props} />
+        <AdminPanelContainer defaultCategories={categories} {...props} />
     );
 }
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-    let categories = [];
-    try {
-        const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/categories");
-        const data = await res.json();
-        categories = data?.data || [];
 
-    } catch (e) {
-        console.log(e);
-        categories = [];
-    }
     return {
         props: {
-            categories: categories || [],
             locale: params?.lang || "en",
         },
     };

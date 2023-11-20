@@ -5,12 +5,12 @@ import {categoriesState} from "../../store/atoms/categories";
 import {CreateCategoryForm} from "../../components/forms/create-cat-form";
 import CategoryList from "../../components/CategoryList";
 
-const AdminPanelContainer = (props) => {
+const AdminPanelContainer = ({defaultCategories,...props}) => {
     const [categories, setCategories] = useRecoilState(categoriesState);
 
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        setCategories(props?.categories || []);
+        setCategories(defaultCategories || []);
         setLoading(false);
     }, []);
 
@@ -22,7 +22,7 @@ const AdminPanelContainer = (props) => {
                 ) : (
                     <>
                         <CreateCategoryForm/>
-                        <CategoryList categories={categories || props?.categories || []}/>
+                        <CategoryList categories={categories || defaultCategories || []}/>
                     </>
                 )
             }

@@ -102,7 +102,7 @@ export const CreateProductForm = ({category, defaultValues = null, closeModal = 
                 //         productID: defaultValues._id,
                 //     }),
                 // });
-                const updatedProduct = await axios.put(process.env.NEXT_PUBLIC_API_URL + "/api/product", {
+                const updatedProduct = await axios.put("/api/product", {
                     updatedProduct: newProduct,
                     categoryID: category._id,
                     productID: defaultValues._id,
