@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {getAllIds} from "../../../lib/files";
 import AdminPanelContainer from "../../../containers/admin-panel";
 import axios from "axios";
+import {useRecoilState} from "recoil";
+import {categoriesState} from "../../../store/atoms/categories";
 
 type AdminProps = {
     locale: string;
@@ -10,24 +12,24 @@ type AdminProps = {
 };
 
 export default function Admin(props: AdminProps) {
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useRecoilState(categoriesState);
+
     const fetchCategories = async () => {
         try {
             const res = await axios.get("/api/categories");
 
-            console.log("fetchCategories res", res?.data?.data);
             setCategories(res?.data?.data || []);
 
         } catch (e) {
             console.log(e);
             setCategories([]);
         }
-    }
+    };
     useEffect(() => {
         fetchCategories();
     }, []);
     return (
-        <AdminPanelContainer defaultCategories={categories} {...props} />
+        <AdminPanelContainer categories={categories} {...props} />
     );
 }
 
