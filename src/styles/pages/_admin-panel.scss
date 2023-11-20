@@ -17,3 +17,15 @@
 
 
 }
+
+.check {
+  // round circle for active and inactive
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  background: #ccc;
+  box-shadow: 0 0 0 1px #fff;
+}

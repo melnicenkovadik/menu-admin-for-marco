@@ -1,7 +1,6 @@
 import Head from 'next/head';
 
 import Header from '../Header';
-import Footer from '../Footer';
 import useTranslation from "../../hooks/useTranslation";
 
 type Props = {
@@ -42,9 +41,6 @@ export default function Layout({
       </Head>
       <Header />
       {children}
-      <Footer>
-        <p>{t('siteName')} - {new Date().getFullYear()}</p>
-      </Footer>
     </main>
   );
 }

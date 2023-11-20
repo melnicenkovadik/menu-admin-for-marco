@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router';
-
+'use client';
+import React from "react";
 import Navigation from '../Navigation';
 import Logo from '../Logo';
-import useTranslation from '../../hooks/useTranslation';
+import SelectLanguage from "../SelectLanguage";
 
 type Props = {
   className?: string;
@@ -11,22 +11,7 @@ type Props = {
 
 export default function Header({ className, children }: Props) {
   const headerClass = className || 'header';
-  const { setLocale, locales } = useTranslation();
-  const { asPath, pathname, push, route } = useRouter();
 
-  function handleLocaleChange(language: string) {
-    if (!window) {
-      return;
-    }
-
-    const regex = new RegExp(`^/(${locales.join('|')})`);
-    localStorage.setItem('lang', language);
-    setLocale(language);
-
-    if (!route.includes('post/')) {
-      push(pathname, asPath.replace(regex, `/${language}`));
-    }
-  }
 
   return (
     <header className={headerClass}>
@@ -34,11 +19,7 @@ export default function Header({ className, children }: Props) {
       <Navigation />
       {children}
       <div className="lang">
-        {locales.map((locale) => (
-          <button key={locale} onClick={() => handleLocaleChange(locale)}>
-            {locale}
-          </button>
-        ))}
+        <SelectLanguage />
       </div>
     </header>
   );
