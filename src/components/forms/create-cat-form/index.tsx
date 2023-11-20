@@ -109,7 +109,7 @@ export const CategoryForm = ({defaultValues = null, closeModal = null}: any) => 
         }
 
         if (isEditMode) {
-            // const updatedCat = await fetch(`/api/categories`, {
+            // const updatedCat = await fetch(process.env.NEXT_PUBLIC_API_URL +  `/api/categories`, {
             //     method: "PUT",
             //     headers: {
             //         "Content-Type": "application/json",
@@ -120,7 +120,7 @@ export const CategoryForm = ({defaultValues = null, closeModal = null}: any) => 
             //     }),
             //     next: {revalidate: 3600}
             // });
-            const updatedCat  = await axios.put(`/api/categories`, {
+            const updatedCat  = await axios.put(process.env.NEXT_PUBLIC_API_URL +  `/api/categories`, {
                 categoryID: defaultValues._id,
                 newCategory: newCategory
             });
@@ -136,7 +136,7 @@ export const CategoryForm = ({defaultValues = null, closeModal = null}: any) => 
             closeModal && closeModal();
 
         } else {
-            const newCat = await axios.post("/api/categories", newCategory);
+            const newCat = await axios.post(process.env.NEXT_PUBLIC_API_URL +  "/api/categories", newCategory);
             setCategories((prev) => [...prev, newCat?.data?.data]);
             toast.success("Category created successfully!");
         }

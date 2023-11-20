@@ -91,7 +91,7 @@ function DropdownCategoryMenu({category}) {
     console.log("categorycategory", category);
     const deleteCategoryHandler = async () => {
         try {
-            const res = await fetch(`/api/categories`, {
+            const res = await fetch(process.env.NEXT_PUBLIC_API_URL +  `/api/categories`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -113,7 +113,7 @@ function DropdownCategoryMenu({category}) {
     };
     const deleteAllProductsCategoryHandler = async () => {
         try {
-            const updatedCat = await axios.put(`/api/categories`, {
+            const updatedCat = await axios.put(process.env.NEXT_PUBLIC_API_URL +  `/api/categories`, {
                 categoryID: categoryID,
                 newCategory: {
                     categoryName: {

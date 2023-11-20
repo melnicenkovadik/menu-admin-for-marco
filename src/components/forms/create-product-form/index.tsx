@@ -91,7 +91,7 @@ export const CreateProductForm = ({category, defaultValues = null, closeModal = 
             }
 
             if (isEditMode) {
-                // const updatedProduct = await fetch("/api/product", {
+                // const updatedProduct = await fetch(process.env.NEXT_PUBLIC_API_URL +  "/api/product", {
                 //     method: "PUT",
                 //     headers: {
                 //         "Content-Type": "application/json",
@@ -102,7 +102,7 @@ export const CreateProductForm = ({category, defaultValues = null, closeModal = 
                 //         productID: defaultValues._id,
                 //     }),
                 // });
-                const updatedProduct = await axios.put("/api/product", {
+                const updatedProduct = await axios.put(process.env.NEXT_PUBLIC_API_URL +  "/api/product", {
                     updatedProduct: newProduct,
                     categoryID: category._id,
                     productID: defaultValues._id,
@@ -123,7 +123,7 @@ export const CreateProductForm = ({category, defaultValues = null, closeModal = 
 
                 toast.success("Product updated successfully!");
             } else {
-                const updatedCat = await fetch("/api/product", {
+                const updatedCat = await fetch(process.env.NEXT_PUBLIC_API_URL +  "/api/product", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

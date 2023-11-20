@@ -16,7 +16,7 @@ export default function Admin(props: AdminProps) {
 
     const fetchCategories = async () => {
         try {
-            const res = await axios.get("/api/categories");
+            const res = await axios.get(process.env.NEXT_PUBLIC_API_URL +  "/api/categories");
 
             setCategories(res?.data?.data || []);
 
