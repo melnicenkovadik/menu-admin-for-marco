@@ -1,0 +1,19 @@
+@import "../functions";
+
+*, *, *::before, *::after {
+  white-space: pre-wrap;
+  word-break: break-word;
+
+}
+
+.admin-panel {
+  background: whitesmoke;
+  @include desktop {
+    padding: desktop-vw(20px);
+  }
+  @include mobile {
+    padding: mobile-vw(10px);
+  }
+
+
+}
