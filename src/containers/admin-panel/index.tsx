@@ -4,7 +4,6 @@ import {CreateCategoryForm} from "../../components/forms/create-cat-form";
 import CategoryList from "../../components/CategoryList";
 
 const AdminPanelContainer = ({categories,...props}) => {
-
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         setLoading(false);

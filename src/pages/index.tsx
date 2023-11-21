@@ -1,18 +1,33 @@
-import Link from 'next/link';
-
-import useTranslation from '../hooks/useTranslation';
+import HomaPageContainer from "../containers/home-page";
+import {useRecoilState} from "recoil";
+import {categoriesState} from "../store/atoms/categories";
+import axios from "axios";
+import {useEffect, useState} from "react";
 
 export default function Home() {
-    const {t, locale} = useTranslation();
+    const [loading,setLoading]=useState(true)
+
+    const [, setCategories] = useRecoilState(categoriesState);
+    const fetchCategories = async () => {
+        try {
+            const res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/api/categories");
+
+            setCategories(res?.data?.data || []);
+
+        } catch (e) {
+            console.log(e);
+            setCategories([]);
+        }
+        setLoading(false)
+    };
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
     return (
-        <section className="hero">
-            <div className="message">
-                {/*<h1>{t('siteName')}</h1>*/}
-                {/*<Link href={`/${locale}/about`}>*/}
-                {/*    <a className="button">{t('about')}</a>*/}
-                {/*</Link>*/}
-            </div>
-        </section>
+        <>
+            {loading && <div className="loading">Loading&#8230;</div>}
+            {!loading && <HomaPageContainer/>}
+        </>
     );
 }

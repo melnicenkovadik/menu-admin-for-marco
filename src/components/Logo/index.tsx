@@ -11,8 +11,8 @@ export default function Logo({ link }: Props) {
 
   return (
     <Link href={href} className="logo">
-        <img src="/svg/logo.svg" alt="logo" /> &nbsp;
-          <p>{t('siteName')}</p>
+        {/*<img src="/svg/logo.svg" alt="logo" /> &nbsp;*/}
+        {/*  <p>{t('siteName')}</p>*/}
     </Link>
   );
 }
