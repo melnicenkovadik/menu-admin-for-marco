@@ -72,9 +72,7 @@ const HomaPageContainer = (props) => {
                         <div className='text-medium'>
                           {product.title[locale]}
                         </div>
-                        {/*cursive font*/}
                         <div className='text-small text-gray-600 italic'>
-                          daskjhdksfhkjashkfkajsfhskadaskjhdksfhkjashkfkajsfhskadaskjhdksfhkjashkfkajsfhskadaskjhdksfhkjashkfkajsfhskadaskjhdksfhkjashkfkajsfhska
                           {product.description[locale]}
                         </div>
                       </div>
