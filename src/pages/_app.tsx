@@ -1,25 +1,26 @@
 import { AppPropsType } from 'next/dist/shared/lib/utils';
 import Layout from '../components/Layout';
-import { LanguageProvider } from '../contexts/LanguageContext';
-import { NextUIProvider } from '@nextui-org/react';
+
 import { Toaster } from 'react-hot-toast';
 
 import { getSide } from '../utils';
 import { RecoilRoot } from 'recoil';
 import '../styles/index.scss';
+import Providers from '../contexts/Providers';
 
-export default function App({ Component, pageProps, router }: AppPropsType) {
+export default function App(props: AppPropsType) {
   console.log('hello from _app - ', getSide());
+
+
   return (
     <RecoilRoot>
-      <NextUIProvider>
+      <Providers>
         <Toaster position='top-right' />
-        <LanguageProvider>
-          <Layout>
-            <Component {...pageProps} key={router.route} />
-          </Layout>
-        </LanguageProvider>
-      </NextUIProvider>
+        <Layout>
+          <props.Component {...props.pageProps} key={props.router.route} />
+        </Layout>
+      </Providers>
     </RecoilRoot>
   );
 }
+
