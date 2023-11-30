@@ -20,8 +20,8 @@ interface ICategoryList {
 }
 
 const CategoryList: FC<ICategoryList> = ({categories}) => {
-
     const {t, locale} = useTranslation();
+
     return (
         <div className="flex flex-col gap-3 md:gap-6">
             <Accordion selectionMode="multiple">
