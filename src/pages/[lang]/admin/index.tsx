@@ -17,8 +17,6 @@ export default function Admin(props: AdminProps) {
     const fetchCategories = async () => {
         try {
             const res = await axios.get(process.env.NEXT_PUBLIC_API_URL +  "/api/categories");
-            const mask  = await axios.get('https://dev.agro.forum/api/v1/country_mask')
-            console.log(mask);
             setCategories(res?.data?.data || []);
 
         } catch (e) {
