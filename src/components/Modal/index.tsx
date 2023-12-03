@@ -7,6 +7,7 @@ import {
     ModalFooter,
     Button,
 } from "@nextui-org/react";
+import useTranslation from "../../hooks/useTranslation";
 
 export default function CreateModal({
                                         isOpen,
@@ -17,11 +18,10 @@ export default function CreateModal({
                                         },
                                         footer = true,
                                     }) {
-
+    const {t} = useTranslation();
 
     return (
         <div className="flex flex-col gap-2">
-
             <Modal
                 isOpen={isOpen}
                 placement="auto"
@@ -30,7 +30,6 @@ export default function CreateModal({
                 <ModalContent>
                     {(onClose) => {
                         const onPressConfirm = async () => {
-                            console.log("Confirm");
                             await onConfirm();
                             onClose();
                         };
@@ -46,7 +45,7 @@ export default function CreateModal({
                                     footer ?
                                         <ModalFooter>
                                             <Button color="danger" variant="light" onPress={onClose}>
-                                                Close
+                                              {t('close')}
                                             </Button>
                                             <Button color="primary" onPress={onPressConfirm}>
                                                 Ok

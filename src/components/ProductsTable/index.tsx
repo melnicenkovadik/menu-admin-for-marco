@@ -57,7 +57,7 @@ export default function ProductsTable({
                         productID: productId
                     }
                 });
-            toast.success("Product deleted successfully!");
+            toast.success(t('productDeleted'));
             setCategories((prev) => {
                 const updatedCat = data.data.data;
                 const newCategories = prev.map((cat) => {
@@ -71,7 +71,7 @@ export default function ProductsTable({
 
         } catch (error) {
             console.error(error);
-            toast.error("Error deleting product!");
+            toast.error(t('errorDeletingProduct'));
         }
         setDeleteProduct(null);
     };
@@ -112,15 +112,14 @@ export default function ProductsTable({
     }, [locale, editProduct, deleteProduct]);
 
     const columns = [
-        {name: "Title", uid: "title"},
-        {name: "Price", uid: "price"},
-        {name: "Description", uid: "description"},
-        {name: "Actions", uid: "actions"},
+        {name: t('title'), uid: "title"},
+        {name: t('price'), uid: "price"},
+        {name: t('description'), uid: "description"},
+        {name: t('actions'), uid: "actions"},
     ];
 
     const renderCell = useCallback((product: Product, columnKey: Key) => {
         const cellValue = product[columnKey as keyof Product];
-        console.log("cellValue", cellValue);
         switch (columnKey) {
             case "title":
                 return (
@@ -182,8 +181,8 @@ export default function ProductsTable({
                     <CreateModal
                         isOpen={isDeleteProductModalOpen}
                         onOpenChange={onDeleteProductModalOpenChange}
-                        modalTitle="Delete product"
-                        modalBody={`Are you sure you want to delete ${deleteProduct?.title}?`}
+                        modalTitle={t('deleteProduct')}
+                        modalBody={`${t('areYouSureYouWantToDelete')} ${deleteProduct?.title}?`}
                         onConfirm={async () => {
                             await deleteProductHandler(deleteProduct._id);
                             setDeleteProduct(null);
@@ -196,7 +195,7 @@ export default function ProductsTable({
                     <CreateModal
                         isOpen={isEditProductModalOpen}
                         onOpenChange={onEditProductModalOpenChange}
-                        modalTitle="Edit product details"
+                        modalTitle={t('editProductDetails')}
                         footer={false}
                         modalBody={
                             <CreateProductForm category={category}

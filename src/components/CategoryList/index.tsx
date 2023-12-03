@@ -51,12 +51,10 @@ const CategoryList: FC<ICategoryList> = ({categories}) => {
                                 </div>
                             ) : (
                                 <div className="flex flex-row justify-center items-center">
-                                    <span>No products in this category</span>
+                                    <span>{t('noProductsInCategory')}</span>
                                 </div>
                             )
-
                         }
-
                     </AccordionItem>
                 ))}
             </Accordion>
@@ -67,7 +65,7 @@ const CategoryList: FC<ICategoryList> = ({categories}) => {
 
 function DropdownCategoryMenu({category}) {
     const categoryID = category._id;
-    const {t, locale} = useTranslation();
+    const {t} = useTranslation();
     const {
         isOpen: isDeleteModalOpen,
         onOpen: onDeleteModalOpen,
@@ -85,10 +83,8 @@ function DropdownCategoryMenu({category}) {
         onOpenChange: onAddProductModalOpenChange
     } = useDisclosure();
 
+    const [, setCategories] = useRecoilState(categoriesState);
 
-    const [categories, setCategories] = useRecoilState(categoriesState);
-
-    console.log("categorycategory", category);
     const deleteCategoryHandler = async () => {
         try {
             const res = await fetch(process.env.NEXT_PUBLIC_API_URL +  `/api/categories`, {
@@ -102,13 +98,12 @@ function DropdownCategoryMenu({category}) {
             const deletedId = data?.data;
             setCategories((prev) => {
                 const newCategories = prev.filter((cat) => cat._id !== deletedId);
-                console.log("deleteCategoryHandler newCategories", newCategories);
                 return newCategories;
             });
-            toast.success("Category deleted successfully!");
+            toast.success(t('categoryDeleted'));
         } catch (error) {
             console.error(error);
-            toast.error("Error deleting category!");
+            toast.error(t('errorDeletingCategory'));
         }
     };
     const deleteAllProductsCategoryHandler = async () => {
@@ -137,20 +132,19 @@ function DropdownCategoryMenu({category}) {
                         }
                         return cat;
                     });
-                    console.log("deleteAllProductsCategoryHandler newCategories", newCategories);
                     return newCategories;
                 }
             );
-            toast.success("Category deleted successfully!");
+            toast.success(t('categoryDeleted'));
         } catch (error) {
             console.error(error);
-            toast.error("Error deleting category!");
+            toast.error(t('errorDeletingCategory'));
         }
     };
     const editCategoryHandler = () => {
         onEditModalOpen();
     };
-    console.log("category", category);
+
     return (
         <>
             <Dropdown backdrop="blur">
@@ -169,45 +163,45 @@ function DropdownCategoryMenu({category}) {
                         className="text-primary"
                         onClick={onAddProductModalOpenChange}
                         key="new">
-                        Add new product
+                        {t('addNewProduct')}
                     </DropdownItem>
 
                     <DropdownItem
                         key="edit"
                         onClick={editCategoryHandler}>
-                        Edit category
+                        {t('editCategory')}
                     </DropdownItem>
 
                     <DropdownItem
                         onClick={onDeleteModalOpen}
                         key="delete" className="text-danger" color="danger">
-                        Delete category
+                        {t('deleteCategory')}
                     </DropdownItem>
                     <DropdownItem
                         onClick={onDeleteAllModalOpen}
                         key="deleteAll" className="text-danger" color="danger">
-                        Delete all products in category
+                        {t('deleteAllProductsInCategory')}
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
             <CreateModal
                 isOpen={isDeleteModalOpen}
                 onOpenChange={onDeleteModalOpenChange}
-                modalTitle="Delete category"
-                modalBody="Are you sure you want to delete this category?"
+                modalTitle={t('deleteCategory')}
+                modalBody={t('areYouSureYouWantToDeleteThisCategory')}
                 onConfirm={deleteCategoryHandler}
             />
             <CreateModal
                 isOpen={isDeleteAllModalOpen}
                 onOpenChange={onDeleteAllModalOpenChange}
-                modalTitle="Delete category"
-                modalBody="Are you sure you want to delete this category?"
+                modalTitle={t('deleteAllProductsInCategory')}
+                modalBody={t('areYouSureYouWantToDeleteAllProductsInThisCategory')}
                 onConfirm={deleteAllProductsCategoryHandler}
             />
             <CreateModal
                 isOpen={isEditModalOpen}
                 onOpenChange={onEditModalOpenChange}
-                modalTitle="Edit category"
+                modalTitle={t('editCategory')}
                 footer={false}
                 modalBody={
                     <CategoryForm defaultValues={category} closeModal={() => {
@@ -218,7 +212,7 @@ function DropdownCategoryMenu({category}) {
             <CreateModal
                 isOpen={isAddProductModalOpen}
                 onOpenChange={onAddProductModalOpenChange}
-                modalTitle="Add new product"
+                modalTitle={t('addNewProduct')}
                 footer={false}
                 modalBody={
                     <CreateProductForm category={category} closeModal={onAddProductModalOpenChange}/>
